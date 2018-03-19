@@ -1,0 +1,22 @@
+BEFORE FORK TO GITHUB STARTER PROJECT
+* aurelia front end
+  * homepage
+  * use handled as from the response to update the user priviledges after every response
+  * edit profile
+  * reset password
+  * forgot password
+  * 4xx based routing
+    * 403 ->
+      * signin if not logged in
+      * ?? if logged in
+* webpack - production and dev
+* seed basic user and remove the rest of seed data
+* backend
+  * forgot password
+  * reset password
+
+AFTER FORK TO STARTER ON GITHUB
+  * regional organizations and regional/super admins
+  * invite user form
+    * sarah can invite anyone
+    * regional admins can only invite to their region

@@ -1,0 +1,19 @@
+{
+  "name": "mean-au-ts-shared",
+  "version": "1.0.0",
+  "description": "Can log \"hello world\" and \"goodbye world\" to the console!",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "tsc",
+    "watch": "tsc -w"
+  },
+  "devDependencies": {
+    "nodemon": "^1.17.2",
+    "typescript": "^2.7.2"
+  },
+  "dependencies": {
+    "aurelia-validation": "^1.1.2",
+    "lodash": "^4.17.5"
+  }
+}

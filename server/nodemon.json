@@ -1,0 +1,7 @@
+{
+  "ignore": [
+    "dist",
+    "index.ts"
+  ],
+  "ext": "less js json html ts"
+}

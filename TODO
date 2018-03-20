@@ -14,9 +14,4 @@ BEFORE FORK TO GITHUB STARTER PROJECT
 * backend
   * forgot password
   * reset password
-
-AFTER FORK TO STARTER ON GITHUB
-  * regional organizations and regional/super admins
-  * invite user form
-    * sarah can invite anyone
-    * regional admins can only invite to their region
+  

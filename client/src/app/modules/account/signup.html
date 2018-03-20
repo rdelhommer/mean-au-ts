@@ -1,0 +1,53 @@
+<template>
+  <div class="container mt-5 container-low">
+    <div class="row">
+      <div class="col-md-2 col-lg-3"></div>
+      <div class="col-md-8 col-lg-6">
+        <div class="card w-100">
+          <div class="card-body">
+            <form-wrap view-model.ref="form">
+              <form-group placeholder="Ex. Jane" autofocus.bind="true" for="firstName">
+                <div slot="label">
+                  First Name
+                </div>
+              </form-group>
+              <form-group placeholder="Ex. Gonzalez" for="lastName">
+                <div slot="label">
+                  Last Name
+                </div>
+              </form-group>
+              <form-group type="phone" placeholder="(000) 000-0000" for="phone">
+                <div slot="label">
+                  Phone
+                </div>
+              </form-group>
+              <form-group type="email" placeholder="Ex. jgonzalez@aurelia.io" for="email">
+                <div slot="label">
+                  Email
+                </div>
+              </form-group>
+              <form-group type="password" placeholder="Use numbers and symbols" for="password">
+                <div slot="label">
+                  Password
+                </div>
+              </form-group>
+              <form-group type="password" placeholder="Retype your password" for="confirmPassword">
+                <div slot="label">
+                  Confirm Password
+                </div>
+              </form-group>
+              <div class="w-100 text-center">
+                <button type="submit" class="btn btn-primary btn-block"
+                        click.delegate="signUp()">
+                  Sign Up
+                </button>
+              </div>
+            </form-wrap>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-2 col-lg-3"></div>
+    </div>
+  </div>
+  
+</template>

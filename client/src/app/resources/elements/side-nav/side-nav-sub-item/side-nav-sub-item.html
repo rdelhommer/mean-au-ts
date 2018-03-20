@@ -1,0 +1,9 @@
+<template>
+  <require from="../side-nav.less"></require>
+  <li class="sub-nav-item nav-item">
+    <a class="sub-nav-link nav-link" href.bind="href"
+        click.delegate="action ? action() : 'javascript(void);'">
+      ${title}
+    </a>
+  </li>
+</template>

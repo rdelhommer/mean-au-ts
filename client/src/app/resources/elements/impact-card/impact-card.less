@@ -1,0 +1,47 @@
+@import '../../../less/variables';
+
+impact-card {
+  .card {
+    min-height: 15em;
+    background-color: @content-background-color;
+    box-shadow: @card-box-shadow;
+    
+    &:hover {
+      .fa, h4 {
+        opacity: 0.1;
+        transition: opacity 0.5s
+      }
+      .overlay {
+        opacity: 0.8;
+        transition: opacity 0.5s
+      }
+    }
+
+    .overlay {
+      position: absolute;
+      background-color: black;
+      opacity: 0;
+      height: 100%;
+      width: 100%;
+      border-radius: 0.25rem;
+      padding: 1em;
+      text-decoration: none;
+
+      .description {
+        color: #FFFFFF;
+        display: flex;
+        height: 100%;
+        align-items: center;
+        flex-direction: column;
+
+        .body {
+          margin-top: auto;
+        }
+
+        .footer {
+          margin-top:auto;
+        }
+      }
+    }
+  }
+}

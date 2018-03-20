@@ -1,0 +1,30 @@
+@import './less/variables.less';
+@import './resources/elements/side-nav/side-nav.less';
+
+.page-host {
+  position: absolute;
+  background-color: @primary-bg;
+  width: 100%;
+
+  padding-top: 1em;
+  padding-bottom: 1em;
+  padding-left: @side-nav-width;
+
+  min-height: 100vh;
+
+  .card {
+    box-shadow: @card-box-shadow;
+  }
+
+  .container {
+    >.row {
+      &:not(:first-child) {
+        margin-top: 2em;
+      }
+    }
+  }
+
+  .container-low {
+    margin-top: 5rem;
+  }
+}

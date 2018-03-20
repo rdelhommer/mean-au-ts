@@ -1,0 +1,25 @@
+<template>
+  <form-wrap view-model.ref="form">
+    <form-group type="email" for="email" placeholder="Enter your email" autofocus.bind="true">
+      <div slot="label">
+        Email
+      </div>
+    </form-group>
+    <form-group type="password" for="password" placeholder="Enter your password">
+      <div slot="label">
+        Password
+      </div>
+    </form-group>
+    <div class="w-100 text-center">
+      <button type="submit" class="btn btn-primary btn-block"
+              click.delegate="signIn()">
+        Sign In
+      </button>
+      <hr>
+      <a href="account/signin/forgot">
+        Forgot your password?
+        <i class="fa fa-chevron-right"></i>
+      </a>
+    </div>
+  </form-wrap>
+</template>

@@ -1,0 +1,61 @@
+<template>
+  <div class="container">
+    <div class="row" if.bind="!auth.isAuthenticated">
+      <div class="col-12">
+        <div class="card w-100">
+          <div class="card-body text-center">
+            <img src="/logo.png"/>
+            <hr/>
+            <p>
+              Food2Soil is a cooperative of a growing group of businesses and gardeners in San Diego who want to direct their waste so it creates jobs and resources for the community.
+            </p>
+            <p>
+              We hire local composters to pick up pre-consumer food waste from participating restaurants and compost them at neighborhood community gardens and urban farms. The soil produced helps local gardeners to grow food.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+        <div class="col-md-4">
+          <impact-card icon="fa-cloud" href="impact/ghg" class="text-success">
+            <div slot="title">
+              64 tons
+            </div>
+            <div slot="body">
+              64 tons of CO<sub>2</sub> sequestered in soil
+            </div>
+            <div slot="footer">
+              Click to learn more!
+            </div>
+          </impact-card>
+        </div>
+        <div class="col-md-4">
+          <impact-card icon="fa-trash" href="impact/landfill" class="text-danger">
+            <div slot="title">
+              2254 ft<sup>3</sup>
+            </div>
+            <div slot="body">
+              2254 ft<sup>3</sup> of soil created
+            </div>
+            <div slot="footer">
+              Click to learn more!
+            </div>
+          </impact-card>
+        </div>
+        <div class="col-md-4">
+          <impact-card icon="fa-money" href="impact/ghg" class="text-primary">
+            <div slot="title">
+              $20378
+            </div>
+            <div slot="body">
+              $20378 earned by soil technicians
+            </div>
+            <div slot="footer">
+              Click to learn more!
+            </div>
+          </impact-card>
+        </div>
+    </div>
+  </div>
+</template>

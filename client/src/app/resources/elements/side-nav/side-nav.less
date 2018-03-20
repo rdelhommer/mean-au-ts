@@ -1,0 +1,111 @@
+@import '../../../less/variables';
+
+@side-nav-width: 4.6em;
+@nav-z: 100;
+@nav-bg: @primary-bg-neg-30;
+@nav-item-height: 3.09em;
+@nav-icon-color: var(--secondary);
+@link-unhover-color: var(--white);
+@link-hover-color: var(--black);
+@nav-item-border: solid 1px lightgray;
+
+side-nav {
+  z-index: @nav-z;
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  background-color: @nav-bg;
+  width: @side-nav-width;
+  box-shadow: 1px 0px 18px -6px @shadow-color;
+
+  .brand {
+    padding-top: 1em;
+    margin-bottom: 3em;
+
+    img {
+      width: @side-nav-width - 2rem;
+    }
+  }
+
+  .nav-link:hover {
+    cursor: pointer;
+  }
+
+  .nav-item:not(.brand) {
+    height: @nav-item-height;
+
+    &.filler-hack {
+      height: 100vh;
+    }
+
+    .icon-nav-link {
+      color: @nav-icon-color;
+      height: @nav-item-height;
+      
+      .badge {
+        position: relative;
+        top: -1.5em;
+        left: 1.5em;
+      }
+    }
+
+    .sub-nav {
+      position: relative;
+      max-height: 0px;
+      top: @nav-item-height * -1;
+      left: @side-nav-width;
+      max-width: 0px;
+      overflow-x: hidden;
+      display: inline-flex;
+      z-index: 1;
+      background-color: @nav-icon-color;
+      border-top-right-radius: 3px;
+      border-bottom-right-radius: 3px;
+      border-bottom-left-radius: 3px;
+
+      .sub-nav-item {
+        padding-left: 1em;
+        padding-right: 1em;
+        white-space: nowrap;
+        display: flex;
+        align-items: center;
+
+        .sub-nav-link {
+          color: @link-unhover-color;
+          border: none;
+          display: block;
+          width: 100%;
+        }
+      }
+
+      side-nav-sub-item {
+        .sub-nav-item {
+          border-top: @nav-item-border;
+        }
+      }
+    }
+
+    &:hover {
+      .nav-link {
+        background-color: @nav-icon-color;
+        color: @link-hover-color;
+        border-right: @nav-item-border;
+      }
+
+      .sub-nav {
+        max-width: 500%;
+        max-height: unset;
+        overflow: hidden;
+        transition: max-width 1s ease-out;
+
+        .sub-nav-item:hover{
+          
+          .sub-nav-link:hover {
+            color: @link-hover-color;
+          }
+        }
+      } 
+    }
+  }
+}

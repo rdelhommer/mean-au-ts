@@ -1,0 +1,29 @@
+<template>
+  <require from="./app.less"></require>
+  <side-nav>
+    <div slot="nav-items">
+      <side-nav-item title="Home" icon="fa-home" href="/">
+        <div slot="nav-sub-items">
+          <side-nav-sub-item title="Test 1" href="/test"></side-nav-sub-item>
+        </div>
+      </side-nav-item>
+      <side-nav-item title.bind="auth.isAuthenticated ? 'Profile' : 'Sign Up'" icon="fa-user" 
+                     href.bind="auth.isAuthenticated ? '/account' : '/account/signup'">
+        <div slot="badge">
+          <span class="badge badge-${auth.isAuthenticated ? 'success' : 'danger'}">
+            <i class="fa fa-fw fa-${auth.isAuthenticated ? 'lock' : 'unlock'}"></i>
+          </span>  
+        </div>
+        <div slot="nav-sub-items">
+          <side-nav-sub-item title="Sign In" href="/account/signin" if.bind="!auth.isAuthenticated"></side-nav-sub-item>
+          <side-nav-sub-item title="Sign Out" if.bind="auth.isAuthenticated" action.call="authApi.signout()"></side-nav-sub-item>
+        </div>
+      </side-nav-item>
+    </div>
+  </side-nav>
+  <div class="page-host">
+    <div class="container-fluid">
+        <router-view></router-view>
+    </div>
+  </div>
+</template>

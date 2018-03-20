@@ -66,6 +66,7 @@ module.exports = ({production, server, extractCss, coverage, analyze} = {}) => (
         // because Aurelia would try to require it again in runtime
         use: cssRules
       },
+      { test: /\.less$/, use: ["css-loader", "less-loader"] },
       { test: /\.html$/i, loader: 'html-loader' },
       { test: /\.tsx?$/, loader: "ts-loader" },
       { test: /\.json$/i, loader: 'json-loader' },
@@ -108,7 +109,8 @@ module.exports = ({production, server, extractCss, coverage, analyze} = {}) => (
       allChunks: true
     })),
     ...when(production, new CopyWebpackPlugin([
-      { from: 'static/favicon.ico', to: 'favicon.ico' }])),
+      { from: 'static/favicon.ico', to: 'favicon.ico' }
+    ])),
     ...when(analyze, new BundleAnalyzerPlugin())
   ]
 });

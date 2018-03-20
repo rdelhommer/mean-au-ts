@@ -1,0 +1,25 @@
+<template>
+    <require from="./impact-card.less"></require>
+  
+    <div class="card">
+      <div class="card-body d-flex flex-column justify-content-center align-items-center">
+        <i class="fa ${icon} fa-5x"></i>
+        <h4>
+          <slot name="title"></slot>
+        </h4>
+        <a class="overlay d-flex text-center flex-column justify-content-center align-items-center"
+           href.bind="href">
+          <!-- <span class="description"><slot></slot></span> -->
+          <span class="description">
+            <h5 class="body">
+              <slot name="body"></slot>
+            </h5>
+            
+            <p class="footer">
+              <slot name="footer"></slot>
+            </p>
+          </span>
+        </a>
+      </div>
+    </div>
+</template>

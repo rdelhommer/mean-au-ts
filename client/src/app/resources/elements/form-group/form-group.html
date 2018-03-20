@@ -1,0 +1,20 @@
+<template>
+    <require from="./form-group.less"></require>
+
+    <div class="form-group">
+      <label for.one-time="id">
+          <slot name="label"></slot>
+      </label>
+      <!-- TODO: Input masking -->
+      <input if.bind="type === 'phone'" type="text" class="form-control" id.one-time="id" 
+             aria-describedby.bind="id + 'Help'"
+             autocomplete autofocus.bind="autofocus"
+             masked="value.bind: value; mask: (999) 999-9999; placeholder: #"/>
+      <input if.bind="type !== 'phone'" type.bind="type" class="form-control" id.one-time="id" 
+             aria-describedby.bind="id + 'Help'" placeholder.bind="placeholder"
+             value.bind="value" autocomplete autofocus.bind="autofocus"/>
+      <small id.bind="id + 'Help'" class="form-text text-muted">
+        <slot name="help"></slot>
+      </small>
+    </div>
+</template>

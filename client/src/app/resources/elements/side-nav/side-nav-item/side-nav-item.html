@@ -1,0 +1,25 @@
+<template>
+  <require from="../side-nav.less"></require>
+  <li class="nav-item">
+    <a class="nav-link icon-nav-link" href.bind="href">
+      <i class="fa fa-2x fa-fw ${icon}"></i>
+      <slot name="badge">
+
+      </slot>
+    </a>
+    <ul class="nav sub-nav flex-column">
+      <li class="sub-nav-item nav-item">
+        <a class="sub-nav-link nav-link" href.bind="href">
+          ${title}
+        </a>
+      </li>
+      <slot name="nav-sub-items"></slot>
+      <!-- <li class="sub-nav-item nav-item" repeat.for="sub of subs">
+        <a class="sub-nav-link nav-link" href.bind="sub.href"
+           click.delegate="sub.action ? sub.action() : 'javascript(void);'">
+          ${sub.title}
+        </a>
+      </li> -->
+    </ul>
+  </li>
+</template>

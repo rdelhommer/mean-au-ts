@@ -4,8 +4,6 @@ import { children } from "aurelia-templating";
 
 @customElement('form-wrap')
 export class FormWrap {
-  private formMap: Map<string, FormGroup>;
-
   @children('form-group') formGroups: FormGroup[];
 
   clear() {
@@ -21,12 +19,7 @@ export class FormWrap {
   }
 
   getValue(propertyKey: string): string {
-    return this.formMap.get(propertyKey).value;
-  }
-
-  attached() {
-    this.formMap = new Map<string, FormGroup>();
-
-    this.formGroups.forEach(fg => this.formMap.set(fg.for, fg));
+    let formGroup = this.formGroups.find(fg => fg.for === propertyKey);
+    return formGroup ? formGroup.value : undefined;
   }
 }

@@ -1,4 +1,4 @@
-import {ValidationRules, FluentRuleCustomizer, Rule} from 'aurelia-validation';
+import {FluentRuleCustomizer, Rule} from 'aurelia-validation';
 
 /**
  * TODO
@@ -10,7 +10,7 @@ export const validationProperty = '__meanValidation__';
 
 export function required(message?: string): any {
   return function (target: Object, propertyKey: string | symbol): void {
-    addValidationToObject(target, (rules: FluentRuleCustomizer<any, any>) => {
+    addValidationToObject(target, propertyKey, (rules: FluentRuleCustomizer<any, any>) => {
       let ret = rules.ensure(propertyKey.toString()).required();
 
       if (message) {
@@ -24,7 +24,7 @@ export function required(message?: string): any {
 
 export function email(message?: string): any {
   return function (target: Object, propertyKey: string | symbol): void {
-    addValidationToObject(target, (rules: FluentRuleCustomizer<any, any>) => {
+    addValidationToObject(target, propertyKey, (rules: FluentRuleCustomizer<any, any>) => {
       let ret = rules.ensure(propertyKey.toString()).satisfies((v: string) => {
         // TODO
         return true;
@@ -41,7 +41,7 @@ export function email(message?: string): any {
 
 export function password(message?: string): any {
   return function (target: Object, propertyKey: string | symbol): void {
-    addValidationToObject(target, (rules: FluentRuleCustomizer<any, any>) => {
+    addValidationToObject(target, propertyKey, (rules: FluentRuleCustomizer<any, any>) => {
       let ret = rules.ensure(propertyKey.toString()).satisfies((v: string) => {
         // TODO
         return true;
@@ -58,7 +58,7 @@ export function password(message?: string): any {
 
 export function phone(message?: string): any {
   return function (target: Object, propertyKey: string | symbol): void {
-    addValidationToObject(target, (rules: FluentRuleCustomizer<any, any>) => {
+    addValidationToObject(target, propertyKey, (rules: FluentRuleCustomizer<any, any>) => {
       let ret = rules.ensure(propertyKey.toString()).satisfies((v: string) => {
         // TODO
         return true;
@@ -73,27 +73,10 @@ export function phone(message?: string): any {
   };
 }
 
-/**
- * This function doesn't walk the prototype chain to find validation decorator metadata.
- * It will only look on the prototype of the object that is passed in.
- * @param object 
- * @param validationRules 
- */
-export function ensureDecoratorsOn(object: any, validationRules: ValidationRules | FluentRuleCustomizer<any, any>): Rule<any,any>[][] {
-  if (!object.constructor.prototype[validationProperty]) return;
-
-  let rules = validationRules;
-  object.constructor.prototype[validationProperty].forEach((factory: (rules: ValidationRules | FluentRuleCustomizer<any, any>) => FluentRuleCustomizer<any, any>) => {
-    rules = factory(rules);
-  });
-
-  return (<FluentRuleCustomizer<any, any>>rules).on(object.constructor).rules;
-}
-
-function addValidationToObject(target: Object, ruleFactory: (rules: FluentRuleCustomizer<any, any>) => FluentRuleCustomizer<any, any>) {
+function addValidationToObject(target: Object, propertyKey: string | symbol, ruleFactory: (rules: FluentRuleCustomizer<any, any>) => FluentRuleCustomizer<any, any>) {
   if (!target[validationProperty]) {
-    target[validationProperty] = [];
+    target[validationProperty] = {};
   }
 
-  target[validationProperty].push(ruleFactory);
+  target[validationProperty][propertyKey] = ruleFactory;
 }

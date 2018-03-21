@@ -4,5 +4,5 @@ export {UserDto} from './dtos/user.dto'
 export {MeDto} from './dtos/me.dto'
 
 export {Enums} from './enums/enums'
-export {Utilities} from './utilities'
-export {ensureDecoratorsOn} from './decorators/validation.decorators'
+export {Utilities} from './utilities/misc'
+export {Validation} from './utilities/validation'

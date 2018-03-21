@@ -1,6 +1,6 @@
 import * as _ from 'lodash';
 
-export namespace Utilities {
+export module Utilities {
   export function newGuid() {
     var d = new Date().getTime();
     if (typeof performance !== 'undefined' && typeof performance.now === 'function'){
@@ -13,14 +13,16 @@ export namespace Utilities {
       return (c === 'x' ? r : (r & 0x3 | 0x8)).toString(16);
     });
   }
-  
+
   export function castTo<T = object>(obj: any, CastTo: new () => T): T {
     return maskObject(new CastTo(), obj);
 
     function maskObject<T = object>(target: T, source: any): T {
       for(var key in target) {
+        if (!target.hasOwnProperty(key)) continue;
+
         if (typeof(target[key]) == 'object' && !Array.isArray(target[key])) {
-          target[key] = this.maskObject(target[key], source[key]);
+          target[key] = maskObject(target[key], source[key]);
         } else {
           target[key] = source[key];
         }

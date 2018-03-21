@@ -40,8 +40,4 @@ export class App {
 
     this.router = router;
   }
-
-  attached() {
-    toastr.success('hhihiihi')
-  }
 }

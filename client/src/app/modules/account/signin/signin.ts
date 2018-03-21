@@ -1,36 +1,53 @@
-import { autoinject } from "aurelia-framework";
+import { autoinject, ComponentDetached } from "aurelia-framework";
 import { FormGroup } from "app/resources/elements/form-group/form-group";
-import { Router } from "aurelia-router";
+import { Router, RoutableComponentCanActivate, NavigationCommand } from "aurelia-router";
 import { FormWrap } from "app/resources/elements/form-wrap/form-wrap";
 import { AuthApi } from "app/apis/auth.api";
-import { AuthDto, ensureDecoratorsOn } from "mean-au-ts-shared";
+import { AuthDto, Utilities, Validation } from "mean-au-ts-shared";
 import {ValidationController, ValidationRules} from 'aurelia-validation';
+import * as toastr from 'toastr';
+import { IAuth } from "../../../services/auth/auth.service";
 
 @autoinject
-export class SignInMain {
+export class SignInMain implements RoutableComponentCanActivate, ComponentDetached{
 
+  private requestBody: AuthDto.SignInDto = new AuthDto.SignInDto();
   form: FormWrap
 
   constructor(
     private authApi: AuthApi,
     private router: Router,
-    private validationController: ValidationController
+    private validationController: ValidationController,
+    private auth: IAuth
   ) { 
-    ensureDecoratorsOn(this, ValidationRules);
-    this.validationController.addObject(this);
-    this.validationController.validate().then((result) => {
-      console.log(result);
-    })
+    Validation.ensureDecoratorsOn(this.requestBody, ValidationRules);
+    this.validationController.addObject(this.requestBody);
   }
 
   signIn() {
-    this.authApi.signin({
-      email: this.form.getValue('email'),
-      password: this.form.getValue('password')
-    }).then(data => {
-      this.router.navigateToRoute('home');
-      // TODO: Toast and redirect to home
-    }) 
+    // Explictly create the reqest body so we get type checking
+    this.requestBody.email = this.form.getValue<AuthDto.SignInDto>('email');
+    this.requestBody.password = this.form.getValue<AuthDto.SignInDto>('password');
+
+    this.validationController.validate().then((result) => {
+      if (!result.valid)
+        return toastr.error(Validation.getErrorResults(result.results)[0].message);
+
+      this.authApi.signin(this.requestBody).then(data => {
+        this.router.navigateToRoute('home');
+        toastr.success(`Welcome, ${data.firstName} ${data.lastName}`);
+      })
+    })
+  }
+
+  canActivate(): NavigationCommand {
+    if (!this.auth.isAuthenticated) return;
+
+    return {
+      navigate: (router: Router) => {
+        router.navigateToRoute('account')
+      }
+    }
   }
 
   detached() {

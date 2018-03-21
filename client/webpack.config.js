@@ -41,6 +41,11 @@ module.exports = ({production, server, extractCss, coverage, analyze} = {}) => (
     chunkFilename: production ? '[name].[chunkhash].chunk.js' : '[name].[hash].chunk.js'
   },
   performance: { hints: false },
+  /**
+   * NOTE:
+   * devServer options must be set in the aurelia_project/tasks/run.ts file
+   * https://github.com/aurelia/cli/issues/794
+   */
   devServer: {
     contentBase: outDir,
     // serve index.html for all 404 (required for push-state)

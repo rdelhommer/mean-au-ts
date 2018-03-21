@@ -31,10 +31,12 @@ export class ResponseErrorInterceptor {
     return response;
   }
 
-  run(response: Response): Promise<Response> {
+  run(response: Response) {
     response = this.toast(response);
     response = this.redirect(response);
 
-    return Promise.reject(response);
+    return response.clone().json().then(body => {
+      throw new Error(body.message);
+    })
   }
 }

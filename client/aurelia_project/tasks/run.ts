@@ -20,6 +20,9 @@ function runWebpack(done) {
     open: project.platform.open,
     stats: {
       colors: require('supports-color')
+    },
+    proxy: {
+      '/api': 'http://localhost:3030'
     }
   } as any;
 

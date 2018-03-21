@@ -4,6 +4,8 @@ import { children } from "aurelia-templating";
 
 @customElement('form-wrap')
 export class FormWrap {
+  @bindable novalidate: boolean;
+
   @children('form-group') formGroups: FormGroup[];
 
   clear() {
@@ -18,7 +20,7 @@ export class FormWrap {
     return ret;
   }
 
-  getValue(propertyKey: string): string {
+  getValue<T = object>(propertyKey: keyof T): string {
     let formGroup = this.formGroups.find(fg => fg.for === propertyKey);
     return formGroup ? formGroup.value : undefined;
   }

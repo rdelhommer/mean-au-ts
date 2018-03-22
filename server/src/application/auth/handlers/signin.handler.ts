@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import * as mongoose from 'mongoose';
-import { AuthDto, UserDto, ensureDecoratorsOn } from "mean-au-ts-shared";
+import { AuthDto, UserDto, Validation } from "mean-au-ts-shared";
 import { IRequestHandler, IAuthenticatedRequest } from "application/request-handler";
 import { HandlerError } from "api/handler.error";
 import { database } from "data-model/mongoose.config";
@@ -12,8 +12,8 @@ import { ValidationRules, ValidationController } from "aurelia-validation";
 class SignInHandler implements IRequestHandler<AuthDto.SignInDto, IUserModel> {
   validate(req: IAuthenticatedRequest<AuthDto.SignInDto>): Promise<IAuthenticatedRequest<AuthDto.SignInDto>> {
     return aureliaValidator.validateObject(
-      req.body, 
-      ensureDecoratorsOn(req.body, ValidationRules)
+      req.body,
+      Validation.ensureDecoratorsOn(req.body, ValidationRules)
     ).then(result => req);
   }
 

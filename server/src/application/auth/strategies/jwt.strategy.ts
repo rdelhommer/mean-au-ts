@@ -57,7 +57,7 @@ export function checkJwtExpired(req: Request, res: Response, next: NextFunction)
   let token = getTokenFromRequest(req);
   let decoded = jsonwebtoken.decodeToken(token);
 
-  if (decoded.exp * 1000 < Date.now()) {
+  if (decoded && decoded.exp * 1000 < Date.now()) {
     return res.status(401).send({
       message: 'Your login session has expired. Please sign in again.'
     })

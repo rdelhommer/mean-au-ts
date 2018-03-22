@@ -1,11 +1,10 @@
-import {Aurelia, autoinject} from 'aurelia-framework';
-import {Router, RouterConfiguration, PipelineStep, Next, NavigationInstruction} from 'aurelia-router';
-import {PLATFORM} from 'aurelia-pal';
-import { SideNav } from './resources/elements/side-nav/side-nav';
+import { Aurelia, autoinject } from 'aurelia-framework';
+import { Router, RouterConfiguration, PipelineStep, Next, NavigationInstruction, Redirect } from 'aurelia-router';
+import { PLATFORM } from 'aurelia-pal';
 import { IAuth } from './services/auth/auth.service';
-import { EventAggregator } from 'aurelia-event-aggregator';
 import { AuthApi } from 'app/apis/auth.api';
-import * as toastr from 'toastr'
+import * as toastr from 'toastr';
+import { Enums } from 'mean-au-ts-shared';
 
 @autoinject
 export class App {
@@ -13,13 +12,43 @@ export class App {
   signOut: Function = this.authApi.signout.bind(this.authApi);
 
   constructor(
-    private authApi: AuthApi,
-    private auth: IAuth
+    private auth: IAuth,
+    private authApi: AuthApi
   ) { }
 
   configureRouter(config: RouterConfiguration, router: Router) {
     config.title = 'Aurelia';
     config.options.pushState = true;
+
+    config.addAuthorizeStep({
+      run: (instruction: NavigationInstruction, next: Next): Promise<any> => {
+        if(this.auth.isNavigationAuthorized(instruction)) {
+          return next();
+        } else {
+          toastr.error('You do not have permission to access that page.')
+          return next.cancel();
+        }
+      }
+    })
+
+
+    config.addAuthorizeStep({
+      run: (instruction: NavigationInstruction, next: Next): Promise<any> => {
+        if (!this.auth.isAuthenticated && (instruction.fragment === '/account' || instruction.fragment === '/account/profile')) {
+          return next.cancel(new Redirect('account/signin'))
+        }
+
+        if (this.auth.isAuthenticated && instruction.fragment === '/account/signin') {
+          return next.cancel(new Redirect('account'))
+        }
+
+        if (this.auth.isAuthenticated && instruction.fragment === '/account/signup') {
+          return next.cancel(new Redirect('account'))
+        }
+
+        return next();
+      }
+    })
 
     config.map([
       {
@@ -27,14 +56,20 @@ export class App {
         name: 'home',
         moduleId: PLATFORM.moduleName('app/modules/home/index'),
         nav: true,
-        title: 'Home' 
+        title: 'Home',
+        settings: {
+          allowedRoles: [Enums.UserRoles.Anonymous]
+        }
       },
       {
         route: 'account',
         name: 'account',
         moduleId: PLATFORM.moduleName('app/modules/account/index'),
         nav: true,
-        title: 'Account'
+        title: 'Account',
+        settings: {
+          allowedRoles: [Enums.UserRoles.Anonymous]
+        }
       }
     ]);
 

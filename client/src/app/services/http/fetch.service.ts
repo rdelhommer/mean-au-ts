@@ -5,8 +5,9 @@ import { IHttp } from './http.service';
 import { buildQueryString } from 'aurelia-path';
 import { ResponseInterceptor } from './interceptors/response.interceptor';
 import { RequestInterceptor } from './interceptors/request.interceptor';
-import { ResponseErrorInterceptor } from './interceptors/response-error.interceptor';
 import { GeneralDto } from 'mean-au-ts-shared';
+import * as toastr from 'toastr';
+import { Router } from 'aurelia-router';
 
 enum Methods {
   GET = 'get',
@@ -20,8 +21,7 @@ export class Fetch implements IHttp{
   constructor(
     private httpClient: HttpClient,
     private requestInterceptor: RequestInterceptor,
-    private responseInterceptor: ResponseInterceptor,
-    private responseErrorInterceptor: ResponseErrorInterceptor
+    private responseInterceptor: ResponseInterceptor
   ) {
     this.configure();
   }
@@ -38,8 +38,7 @@ export class Fetch implements IHttp{
         })
         .withInterceptor({
           request: this.requestInterceptor.run.bind(this.requestInterceptor),
-          response: this.responseInterceptor.run.bind(this.responseInterceptor),
-          responseError: this.responseErrorInterceptor.run.bind(this.responseErrorInterceptor)
+          response: this.responseInterceptor.run.bind(this.responseInterceptor)
         });
 
         return config;
@@ -50,14 +49,13 @@ export class Fetch implements IHttp{
     return this.httpClient.fetch(url, {
       method: method,
       body: body ? json(body) : undefined
-    }).then(response => {
+    }).then((response: Response) => {
       return response.json();
-    }).catch(response => {
-      if (!response.json) throw response;
-
+    }).catch((response: Response) => {
       return response.json().then((body: GeneralDto.ErrorResponseBody) => {
+        toastr.error(body.message)
         throw new Error(body.message)
-      });
+      })
     });
   }
 

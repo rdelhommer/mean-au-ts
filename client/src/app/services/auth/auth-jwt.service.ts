@@ -2,7 +2,8 @@ import { IEnv } from "config/env.config";
 import { ICache } from "app/services/cache/cache.service";
 import { IAuth } from "app/services/auth/auth.service";
 import { autoinject, computedFrom } from "aurelia-framework";
-import { GeneralDto } from "mean-au-ts-shared";
+import { GeneralDto, Enums, UserDto } from "mean-au-ts-shared";
+import { NavigationInstruction } from "aurelia-router";
 
 @autoinject
 export class JwtAuth implements IAuth {
@@ -12,6 +13,11 @@ export class JwtAuth implements IAuth {
   @computedFrom('responseFlag')
   get isAuthenticated() : boolean {
     return !!this.cache.get(ICache.Mode.Global, this.env.localStorage.authKey);
+  }
+
+  @computedFrom('responseFlag')
+  get currentUser(): UserDto.UserPublicDto {
+    return this.cache.get(ICache.Mode.Global, this.env.localStorage.userKey);
   }
 
   constructor(
@@ -34,11 +40,25 @@ export class JwtAuth implements IAuth {
 
   storeAuth(response: Response): Response {
     response.clone().json().then((body: GeneralDto.SuccessResponseBody) => {
-      this.responseFlag = !this.responseFlag;
-
       this.cache.set(ICache.Mode.Global, this.env.localStorage.authKey, body.token);
+      this.cache.set(ICache.Mode.Global, this.env.localStorage.userKey, body.data);
+
+      this.responseFlag = !this.responseFlag;
     })
 
     return response;
+  }
+
+  isNavigationAuthorized(instruction: NavigationInstruction): boolean {
+    if (!instruction.config.settings || !instruction.config.settings.allowedRoles)
+      return false;
+
+    let allowedRoles: Enums.UserRoles[] = instruction.config.settings.allowedRoles;
+
+    if (allowedRoles.some(r => r === Enums.UserRoles.Anonymous)) return true;
+
+    let ret  = false;
+    allowedRoles.forEach(a => ret = this.currentUser.roles.some(r => r === a));
+    return ret;
   }
 }

@@ -1,13 +1,16 @@
 export abstract class IEnv {
   abstract localStorage: {
-    authKey: string
+    authKey: string,
+    userKey: string
   }
 }
 
 export class Env implements IEnv {
   localStorage: {
-    authKey: string
+    authKey: string,
+    userKey: string
   } = {
-    authKey: 'AUTH_KEY'
+    authKey: 'AUTH_TOKEN',
+    userKey: 'CURRENT_USER'
   }
 }

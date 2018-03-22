@@ -83,14 +83,9 @@ MEAN-AU-TS is still very unfinished and the todo list is still pretty large.  If
 * improvements to how shared dependencies are managed.  This was sort of a proof of concept for me to share interfaces and classes between the front and backends.  I'm sure there's a cleaner way to implement it.
 ### Front End
 * homepage - some kind of 
-* use handled as from the response to update the user role in response interceptor
 * edit profile
   * edit name and change password
 * reset password
-* 4xx based routing
-  * 403 ->
-    * signin if not logged in
-    * ?? if logged in
 ### Back End
 * forgot password
 * reset password

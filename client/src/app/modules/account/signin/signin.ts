@@ -7,6 +7,7 @@ import { AuthDto, Utilities, Validation } from "mean-au-ts-shared";
 import {ValidationController, ValidationRules} from 'aurelia-validation';
 import * as toastr from 'toastr';
 import { IAuth } from "../../../services/auth/auth.service";
+import { IValidator } from "app/services/validator/validator.service";
 
 @autoinject
 export class SignInMain implements RoutableComponentCanActivate, ComponentDetached{
@@ -18,10 +19,10 @@ export class SignInMain implements RoutableComponentCanActivate, ComponentDetach
     private authApi: AuthApi,
     private router: Router,
     private validationController: ValidationController,
-    private auth: IAuth
+    private auth: IAuth,
+    private validator: IValidator
   ) { 
     Validation.ensureDecoratorsOn(this.requestBody, ValidationRules);
-    this.validationController.addObject(this.requestBody);
   }
 
   signIn() {
@@ -29,14 +30,13 @@ export class SignInMain implements RoutableComponentCanActivate, ComponentDetach
     this.requestBody.email = this.form.getValue<AuthDto.SignInDto>('email');
     this.requestBody.password = this.form.getValue<AuthDto.SignInDto>('password');
 
-    this.validationController.validate().then((result) => {
-      if (!result.valid)
-        return toastr.error(Validation.getErrorResults(result.results)[0].message);
-
+    this.validator.validateObject(this.requestBody).then(() => {
       this.authApi.signin(this.requestBody).then(data => {
         this.router.navigateToRoute('home');
         toastr.success(`Welcome, ${data.firstName} ${data.lastName}`);
       })
+    }).catch(error => {
+      return toastr.error(error.errors[0].message);
     })
   }
 

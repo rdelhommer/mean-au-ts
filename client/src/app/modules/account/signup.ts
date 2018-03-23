@@ -15,6 +15,7 @@ export class SignUp {
   ) { }
 
   signUp() {
+    // TODO: add validation
     this.authApi.signup({
       firstName: this.form.getValue('firstName'),
       lastName: this.form.getValue('lastName'),

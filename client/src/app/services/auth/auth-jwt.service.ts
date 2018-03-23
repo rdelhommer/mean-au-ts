@@ -8,14 +8,14 @@ import { NavigationInstruction } from "aurelia-router";
 @autoinject
 export class JwtAuth implements IAuth {
 
-  private responseFlag: boolean;
+  private authAlteredFlag: boolean;
 
-  @computedFrom('responseFlag')
+  @computedFrom('authAlteredFlag')
   get isAuthenticated() : boolean {
     return !!this.cache.get(ICache.Mode.Global, this.env.localStorage.authKey);
   }
 
-  @computedFrom('responseFlag')
+  @computedFrom('authAlteredFlag')
   get currentUser(): UserDto.UserPublicDto {
     return this.cache.get(ICache.Mode.Global, this.env.localStorage.userKey);
   }
@@ -36,6 +36,7 @@ export class JwtAuth implements IAuth {
 
   clearAuth(): void {
     this.cache.delete(ICache.Mode.Global, this.env.localStorage.authKey);
+    this.authAlteredFlag = !this.authAlteredFlag;
   }
 
   storeAuth(response: Response): Response {
@@ -43,7 +44,7 @@ export class JwtAuth implements IAuth {
       this.cache.set(ICache.Mode.Global, this.env.localStorage.authKey, body.token);
       this.cache.set(ICache.Mode.Global, this.env.localStorage.userKey, body.data);
 
-      this.responseFlag = !this.responseFlag;
+      this.authAlteredFlag = !this.authAlteredFlag;
     })
 
     return response;

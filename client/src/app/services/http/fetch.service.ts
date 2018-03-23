@@ -8,6 +8,7 @@ import { RequestInterceptor } from './interceptors/request.interceptor';
 import { GeneralDto } from 'mean-au-ts-shared';
 import * as toastr from 'toastr';
 import { Router } from 'aurelia-router';
+import { ResponseErrorInterceptor } from './interceptors/response-error.interceptor';
 
 enum Methods {
   GET = 'get',
@@ -21,7 +22,8 @@ export class Fetch implements IHttp{
   constructor(
     private httpClient: HttpClient,
     private requestInterceptor: RequestInterceptor,
-    private responseInterceptor: ResponseInterceptor
+    private responseInterceptor: ResponseInterceptor,
+    private responseErrorInterceptor: ResponseErrorInterceptor
   ) {
     this.configure();
   }
@@ -38,7 +40,8 @@ export class Fetch implements IHttp{
         })
         .withInterceptor({
           request: this.requestInterceptor.run.bind(this.requestInterceptor),
-          response: this.responseInterceptor.run.bind(this.responseInterceptor)
+          response: this.responseInterceptor.run.bind(this.responseInterceptor),
+          responseError: this.responseErrorInterceptor.run.bind(this.responseErrorInterceptor),
         });
 
         return config;
@@ -51,11 +54,10 @@ export class Fetch implements IHttp{
       body: body ? json(body) : undefined
     }).then((response: Response) => {
       return response.json();
-    }).catch((response: Response) => {
-      return response.json().then((body: GeneralDto.ErrorResponseBody) => {
-        toastr.error(body.message)
-        throw new Error(body.message)
-      })
+    }).catch((error: Error) => {
+      toastr.error(error.message)
+
+      throw error;
     });
   }
 

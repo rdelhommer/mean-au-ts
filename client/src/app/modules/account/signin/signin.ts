@@ -26,10 +26,6 @@ export class SignInMain implements RoutableComponentCanActivate, ComponentDetach
   }
 
   signIn() {
-    // Explictly create the reqest body so we get type checking
-    this.requestBody.email = this.form.getValue<AuthDto.SignInDto>('email');
-    this.requestBody.password = this.form.getValue<AuthDto.SignInDto>('password');
-
     this.validator.validateObject(this.requestBody).then(() => {
       this.authApi.signin(this.requestBody).then(data => {
         this.router.navigateToRoute('home');

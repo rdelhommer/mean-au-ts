@@ -7,26 +7,37 @@ export class FormWrap {
   @bindable novalidate: boolean;
   @bindable model: any;
 
+  private isAttached: boolean;
+  deferredRefresh: () => void;
+
   @children('form-group') formGroups: FormGroup[];
 
   clear() {
-    this.formGroups.forEach(fg => fg.value = null);
-  }
-
-  toObject() {
-    let ret = {};
-
-    this.formGroups.forEach(fg => ret[fg.for] = fg.value);
-
-    return ret;
-  }
-
-  getValue<T = object>(propertyKey: keyof T): string {
-    let formGroup = this.formGroups.find(fg => fg.for === propertyKey);
-    return formGroup ? formGroup.value : undefined;
+    this.formGroups.forEach(fg => fg.clear());
   }
 
   formGroupsChanged(n, o) {
-    this.formGroups.forEach(fg => fg.model = this.model);
+    // Defer the refresh so input masking doesn't barf
+    if (!this.isAttached) {
+      this.deferredRefresh = () => {
+        this.formGroups.forEach(fg => {
+          fg.model = this.model;
+          fg.value = this.model[fg.for];
+        });
+      }
+    } else {
+      this.formGroups.forEach(fg => {
+        fg.model = this.model;
+        fg.value = this.model[fg.for];
+      });
+    }
+  }
+
+  attached() {
+    this.isAttached = true;
+
+    if (this.deferredRefresh) {
+      this.deferredRefresh();
+    }
   }
 }

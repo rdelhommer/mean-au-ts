@@ -7,10 +7,9 @@ export namespace AuthDto {
     email: string = undefined
 
     @required('Please provide a password')
-    @password()
     password: string = undefined
   }
-  
+
   export class SignUpDto {
     @required('Please provide your first name')
     firstName: string = undefined

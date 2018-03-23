@@ -10,12 +10,15 @@
         Password
       </div>
     </form-group>
-    <div class="w-100 text-center">
+
+    <div slot="submit">
       <button type="submit" class="btn btn-primary btn-block"
               click.delegate="signIn()">
         Sign In
       </button>
-      <hr>
+    </div>
+
+    <div slot="secondary">
       <a href="account/signin/forgot">
         Forgot your password?
         <i class="fa fa-chevron-right"></i>

@@ -1,5 +1,10 @@
 <template>
   <form novalidate.bind="novalidate">
     <slot></slot>
+    <hr>
+    <slot name="submit"></slot>
+    <div class="mt-4 w-100 text-center">
+        <slot name="secondary"></slot>
+    </div>
   </form>
 </template>

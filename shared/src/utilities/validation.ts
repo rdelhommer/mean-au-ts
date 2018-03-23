@@ -12,8 +12,10 @@ export namespace Validation {
     if (!object.constructor.prototype[validationProperty]) return;
 
     let rules = validationRules;
-    Object.keys(object.constructor.prototype[validationProperty]).forEach(k => {
-      rules = object.constructor.prototype[validationProperty][k](rules)
+    Object.keys(object.constructor.prototype[validationProperty]).forEach(propertyName => {
+      Object.keys(object.constructor.prototype[validationProperty][propertyName]).forEach(ruleName => {
+        rules = object.constructor.prototype[validationProperty][propertyName][ruleName](rules)
+      })
     });
 
     return (<FluentRuleCustomizer<any, any>>rules).on(object.constructor).rules;

@@ -16,7 +16,7 @@
         </div>
         <div slot="nav-sub-items">
           <side-nav-sub-item title="Sign In" href="/account/signin" if.bind="!auth.isAuthenticated"></side-nav-sub-item>
-          <side-nav-sub-item title="Sign Out" if.bind="auth.isAuthenticated" action.call="authApi.signout()"></side-nav-sub-item>
+          <side-nav-sub-item title="Sign Out" if.bind="auth.isAuthenticated" action.call="signOut()"></side-nav-sub-item>
         </div>
       </side-nav-item>
     </div>

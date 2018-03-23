@@ -9,12 +9,18 @@ import { Enums } from 'mean-au-ts-shared';
 @autoinject
 export class App {
   router: Router;
-  signOut: Function = this.authApi.signout.bind(this.authApi);
 
   constructor(
     private auth: IAuth,
     private authApi: AuthApi
   ) { }
+
+  signOut() {
+    this.authApi.signout().then(response => {
+      this.auth.clearAuth();
+      this.router.navigateToRoute('home');
+    })
+  }
 
   configureRouter(config: RouterConfiguration, router: Router) {
     config.title = 'Aurelia';

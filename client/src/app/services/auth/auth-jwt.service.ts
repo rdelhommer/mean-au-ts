@@ -36,6 +36,7 @@ export class JwtAuth implements IAuth {
 
   clearAuth(): void {
     this.cache.delete(ICache.Mode.Global, this.env.localStorage.authKey);
+    this.cache.delete(ICache.Mode.Global, this.env.localStorage.userKey);
     this.authAlteredFlag = !this.authAlteredFlag;
   }
 

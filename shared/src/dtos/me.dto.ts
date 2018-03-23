@@ -1,4 +1,4 @@
-import { required, password } from "../decorators/validation.decorators";
+import { required, password, sameAs } from "../decorators/validation.decorators";
 
 export namespace MeDto {
   export class ChangePasswordDto {
@@ -11,6 +11,7 @@ export namespace MeDto {
 
     @required('Please verify your new password')
     @password()
+    @sameAs<ChangePasswordDto>('newPassword', 'Your new passwords do not match')
     verifyPassword: string = undefined
   }
 }

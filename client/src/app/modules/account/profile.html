@@ -3,13 +3,69 @@
     <div class="row">
       <div class="col-md-6">
         <div class="card">
+          <div class="card-header">
+            General Information
+          </div>
           <div class="card-body">
+            <form-wrap model.bind="generalInformation" view-model.ref="generalInformationForm">
+              <form-group type="text" for="firstName" placeholder="Enter your first name">
+                <div slot="label">
+                  First Name
+                </div>
+              </form-group>
+              <form-group type="text" for="lastName" placeholder="Enter your last name">
+                <div slot="label">
+                  Last Name
+                </div>
+              </form-group>
+              <form-group type="email" for="email" placeholder="Enter your email">
+                <div slot="label">
+                  Email
+                </div>
+              </form-group>
+              <form-group type="phone" for="phone" placeholder="Enter your phone number">
+                <div slot="label">
+                  Phone
+                </div>
+              </form-group>
+              <div slot="submit">
+                <button type="submit" class="btn btn-primary btn-block" click.delegate="changePassword()">
+                  Update Profile
+                </button>
+              </div>
+            </form-wrap>
           </div>
         </div>
       </div>
       <div class="col-md-6">
         <div class="card">
-          <div class="card-body"></div>
+          <div class="card-header">
+            Credentials
+          </div>
+          <div class="card-body">
+            <form-wrap model.bind="changePasswordDetails" view-model.ref="changePasswordForm">
+              <form-group type="password" for="currentPassword" placeholder="Enter your current password">
+                <div slot="label">
+                  Current Password
+                </div>
+              </form-group>
+              <form-group type="password" for="newPassword" placeholder="Enter your new password">
+                <div slot="label">
+                  New Password
+                </div>
+              </form-group>
+              <form-group type="password" for="verifyPassword" placeholder="Confirm your new password">
+                <div slot="label">
+                  Verify New Password
+                </div>
+              </form-group>
+              <div slot="submit">
+                <button type="submit" class="btn btn-primary btn-block" click.delegate="changePassword()">
+                  Change Password
+                </button>
+              </div>
+            </form-wrap>
+          </div>
         </div>
       </div>
     </div>

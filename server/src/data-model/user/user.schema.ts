@@ -4,7 +4,6 @@ import { hashPassword } from "data-model/user/ext/hash-password.ext";
 import { isAuthenticated } from "data-model/user/ext/is-authenticated.ext";
 import { getHighestRole } from "data-model/user/ext/get-highest-role.ext";
 import { validateEmail } from "data-model/user/hooks/validate-email.hook";
-import { validatePassword } from "data-model/user/hooks/validate-password.hook";
 import { hashPasswordHook } from "data-model/user/hooks/hash-password.hook";
 import { isAnonymous } from "./ext/is-anonymous.ext";
 import { Enums } from "mean-au-ts-shared";
@@ -83,7 +82,6 @@ let extensions: IUserExt = {
 Object.assign(UserSchema.methods, extensions);
 
 UserSchema.pre('validate', validateEmail);
-UserSchema.pre('validate', validatePassword);
 UserSchema.pre('validate', hashPasswordHook);
 
 export const UserModel = model<IUserModel>('User', UserSchema);

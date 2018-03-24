@@ -12,15 +12,12 @@ class UpdateProfileHandler implements IRequestHandler<MeDto.ProfileDto, void> {
   }
 
   execute(req: IAuthenticatedRequest<MeDto.ProfileDto>): Promise<void> {
-    console.log(req.body);
     req.user.firstName = req.body.firstName;
     req.user.lastName = req.body.lastName;
     req.user.email = req.body.email;
     req.user.phone = req.body.phone;
 
-    return req.user.save().then(user => {
-      console.log(user);
-    });
+    return req.user.save().then(user => undefined);
   }
 }
 

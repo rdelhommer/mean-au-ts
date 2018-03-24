@@ -81,15 +81,17 @@ Webpack conveniently proxies API requests to the node server at localhost:3030 a
 MEAN-AU-TS is still very unfinished and the todo list is still pretty large.  If you'd like to help, any contributions especially in these area would be greatly appreciated:
 ### Shared Dependencies
 * improvements to how shared dependencies are managed.  This was sort of a proof of concept for me to share interfaces and classes between the front and backends.  I'm sure there's a cleaner way to implement it.
+
 ### Front End
 * homepage - some kind of 
-* edit profile
-  * edit name and change password
 * reset password
+
 ### Back End
 * forgot password
-* reset password
 * seed data examples
+
+### General
+* get reflect metadata working
 
 ### Documentation and Testing
 * simple heroku production dist and deployment proof of concept

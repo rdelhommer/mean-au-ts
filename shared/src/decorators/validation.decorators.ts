@@ -56,8 +56,7 @@ export function phone(message?: string): any {
   return function (target: Object, propertyKey: string | symbol): void {
     addValidationToObject(target, propertyKey, 'phone', (rules: FluentRuleCustomizer<any, any>) => {
       return rules.ensure(propertyKey.toString()).satisfies((v: string) => {
-        let regex = new RegExp(/^\(\d{3}\)\s\d{3}-\d{4}/);
-        return !v || regex.test(v);
+        return !v || v.length === 10;
       }).withMessage(message || 'The phone number you provided is not valid')
     });
   };

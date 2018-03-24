@@ -11,13 +11,17 @@ export class MeApi {
 
   constructor(private http: IHttp) { }
 
-  me(): Promise<UserDto.UserPublicDto> {
+  me(): Promise<MeDto.ProfileDto> {
     return this.http.get(this.baseUrl).then(response => {
-      return Utilities.castTo<UserDto.UserPublicDto>(response.data, UserDto.UserPublicDto);
+      return Utilities.castTo<MeDto.ProfileDto>(response.data, MeDto.ProfileDto);
     });;
   }
 
   changePassword(body: MeDto.ChangePasswordDto): Promise<any> {
     return this.http.post(`${this.baseUrl}/change-password`, body);
+  }
+
+  updateProfile(body: MeDto.ProfileDto): Promise<any> {
+    return this.http.put(this.baseUrl, body);
   }
 }

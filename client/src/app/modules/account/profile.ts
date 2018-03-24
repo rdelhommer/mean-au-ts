@@ -10,7 +10,7 @@ import * as toastr from 'toastr';
 @autoinject
 export class AccountProfile implements RoutableComponentActivate {
 
-  generalInformation: UserDto.UserPublicDto = new UserDto.UserPublicDto();
+  generalInformation: MeDto.ProfileDto = new MeDto.ProfileDto();
   changePasswordDetails: MeDto.ChangePasswordDto = new MeDto.ChangePasswordDto();
 
   generalInformationForm: FormWrap
@@ -35,8 +35,14 @@ export class AccountProfile implements RoutableComponentActivate {
     })
   }
 
-  updateProfile() {
-    // TODO:
+  updateGeneralInfo() {
+    this.validator.validateObject(this.generalInformation).then(results => {
+      this.meApi.updateProfile(this.generalInformation).then(() => {
+        toastr.success('Profile updated successfully');
+      });
+    }).catch((error: ValidationError) => {
+      toastr.error(error.errors[0].message);
+    })
   }
 
   activate() {

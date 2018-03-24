@@ -33,6 +33,12 @@ export class FormWrap {
     }
   }
 
+  bind() {
+    if (this.novalidate == null) {
+      this.novalidate = true;
+    }
+  }
+
   attached() {
     this.isAttached = true;
 

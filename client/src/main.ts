@@ -10,6 +10,7 @@ import {PLATFORM} from 'aurelia-pal';
 import * as Bluebird from 'bluebird';
 import { configureRootContainer } from 'config/container.config';
 import { globalResources } from 'config/resource.config';
+import 'bootstrap';
 
 // remove out if you don't want a Promise polyfill (remove also from webpack.config.js)
 Bluebird.config({ warnings: { wForgottenReturn: false } });

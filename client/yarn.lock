@@ -20,6 +20,13 @@
   version "0.7.0"
   resolved "https://registry.yarnpkg.com/@sindresorhus/is/-/is-0.7.0.tgz#9a06f4f137ee84d7df0460c1fdb1135ffa6c50fd"
 
+"@types/bootstrap@^4.0.1":
+  version "4.0.1"
+  resolved "https://registry.yarnpkg.com/@types/bootstrap/-/bootstrap-4.0.1.tgz#7eddfc4e56143cfc54de0fba573d9724ec8b2712"
+  dependencies:
+    "@types/jquery" "*"
+    popper.js "^1.14.1"
+
 "@types/debug@^0.0.29":
   version "0.0.29"
   resolved "https://registry.yarnpkg.com/@types/debug/-/debug-0.0.29.tgz#a1e514adfbd92f03a224ba54d693111dbf1f3754"
@@ -28,7 +35,7 @@
   version "22.2.0"
   resolved "https://registry.yarnpkg.com/@types/jest/-/jest-22.2.0.tgz#55ce83139f7ad1b48b414c3927746614c6963c0f"
 
-"@types/jquery@*":
+"@types/jquery@*", "@types/jquery@^3.3.1":
   version "3.3.1"
   resolved "https://registry.yarnpkg.com/@types/jquery/-/jquery-3.3.1.tgz#55758d44d422756d6329cbf54e6d41931d7ba28f"
 
@@ -39,6 +46,12 @@
 "@types/node@*", "@types/node@^9.4.7":
   version "9.4.7"
   resolved "http://registry.npmjs.org/@types/node/-/node-9.4.7.tgz#57d81cd98719df2c9de118f2d5f3b1120dcd7275"
+
+"@types/popper.js@^1.11.0":
+  version "1.11.0"
+  resolved "https://registry.yarnpkg.com/@types/popper.js/-/popper.js-1.11.0.tgz#217a9231953ded26b15a6264f9942e963a8f6e69"
+  dependencies:
+    popper.js "*"
 
 "@types/tapable@*":
   version "1.0.0"
@@ -6169,7 +6182,7 @@ jest@^22.4.2:
     import-local "^1.0.0"
     jest-cli "^22.4.2"
 
-jquery@>=1.12.0:
+jquery@>=1.12.0, jquery@^3.3.1:
   version "3.3.1"
   resolved "https://registry.yarnpkg.com/jquery/-/jquery-3.3.1.tgz#958ce29e81c9790f31be7792df5d4d95fc57fbca"
 
@@ -8532,7 +8545,7 @@ pn@^1.1.0:
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/pn/-/pn-1.1.0.tgz#e2f4cef0e219f463c179ab37463e4e1ecdccbafb"
 
-popper.js@^1.14.1:
+popper.js@*, popper.js@^1.14.1:
   version "1.14.1"
   resolved "https://registry.yarnpkg.com/popper.js/-/popper.js-1.14.1.tgz#b8815e5cda6f62fc2042e47618649f75866e6753"
 

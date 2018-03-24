@@ -1,0 +1,9 @@
+<template>
+  <require from="./help-tooltip.less"></require>
+    <div id="tooltip-content" style="display:none;">
+      <slot></slot>
+    </div>
+
+    <i if.bind="content" id.bind="id" class="fa fa-question-circle text-info" data-html="true"
+       data-toggle="tooltip" data-placement="top" title.bind="content"></i>
+</template>

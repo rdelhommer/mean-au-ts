@@ -48,35 +48,37 @@ export class Fetch implements IHttp{
     });
   }
 
-  private sendRequest(url: string, method: string, body?: object): Promise<GeneralDto.SuccessResponseBody> {
+  private sendRequest(url: string, method: string, body: object, toastError: boolean = true): Promise<GeneralDto.SuccessResponseBody> {
     return this.httpClient.fetch(url, {
       method: method,
       body: body ? json(body) : undefined
     }).then((response: Response) => {
       return response.json();
     }).catch((error: Error) => {
-      toastr.error(error.message)
+      if (toastError) {
+        toastr.error(error.message)
+      }
 
       throw error;
     });
   }
 
-  get(url: string, params?: object): Promise<GeneralDto.SuccessResponseBody> {
+  get(url: string, params?: object, toastError: boolean = true): Promise<GeneralDto.SuccessResponseBody> {
     let stringifiedParams = buildQueryString(params);
-    return this.sendRequest(`${url}${stringifiedParams}`, Methods.GET);
+    return this.sendRequest(`${url}?${stringifiedParams}`, Methods.GET, null, toastError);
   }
 
-  post(url: string, body?: object): Promise<GeneralDto.SuccessResponseBody> {
-    return this.sendRequest(url, Methods.POST, body);
+  post(url: string, body?: object, toastError: boolean = true): Promise<GeneralDto.SuccessResponseBody> {
+    return this.sendRequest(url, Methods.POST, body, toastError);
   }
 
-  delete(url: string, body?: object): Promise<GeneralDto.SuccessResponseBody> {
-    return this.sendRequest(url, Methods.DELETE, body);
+  delete(url: string, body?: object, toastError: boolean = true): Promise<GeneralDto.SuccessResponseBody> {
+    return this.sendRequest(url, Methods.DELETE, body, toastError);
 
   }
 
-  put(url: string, body?: object): Promise<GeneralDto.SuccessResponseBody> {
-    return this.sendRequest(url, Methods.PUT, body);
+  put(url: string, body?: object, toastError: boolean = true): Promise<GeneralDto.SuccessResponseBody> {
+    return this.sendRequest(url, Methods.PUT, body, toastError);
 
   }
 }

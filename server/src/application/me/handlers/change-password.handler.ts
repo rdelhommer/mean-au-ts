@@ -7,7 +7,7 @@ import { MeDto, Validation } from "mean-au-ts-shared";
 import { ValidationRules } from "aurelia-validation";
 import { aureliaValidator } from "lib/validator.lib";
 
-class ChangePasswordHandler implements IRequestHandler<MeDto.ChangePasswordDto> {
+class ChangePasswordHandler implements IRequestHandler<MeDto.ChangePasswordDto, void> {
   validate(req: IAuthenticatedRequest<MeDto.ChangePasswordDto>): Promise<IAuthenticatedRequest<MeDto.ChangePasswordDto>> {
     let rules = ValidationRules
       .ensure((x: MeDto.ChangePasswordDto) => x.currentPassword)

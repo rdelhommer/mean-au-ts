@@ -8,11 +8,11 @@ import { IRequestHandler, IAuthenticatedRequest } from 'application/request-hand
 export class ModuleExecutor {
   responseBuilder: IResponseBuilder
 
-  execute<TRequestBody = any, TResponseData = void>(
+  execute<TRequestBody, TResponseData>(
     handler: IRequestHandler<TRequestBody, TResponseData>,
     ExpectedBody: new () => TRequestBody
   ) {
-    return (req: IAuthenticatedRequest, res: Response) => {
+    return (req: IAuthenticatedRequest<any>, res: Response) => {
       try {
         if (ExpectedBody) {
           // transform the request body into the expected type.
@@ -27,7 +27,7 @@ export class ModuleExecutor {
             if (!this.responseBuilder) {
               return res.json(responseData);
             }
-    
+
             return res.json(this.responseBuilder.buildResponse(req, responseData));
           }).catch((err: HandlerError) => {
             let body: GeneralDto.ErrorResponseBody;
@@ -35,23 +35,23 @@ export class ModuleExecutor {
               body = {
                 message: err.message
               }
-    
+
               return res.status(err.httpCode || 500).send(body);
             }
-    
+
             logger.error(err.message)
             logger.error(err.stack)
-    
+
             body = {
               message: 'An error occurred'
             }
-    
+
             return res.status(500).send(body)
           })
       } catch (err) {
           logger.error(err.message)
           logger.error(err.stack)
-  
+
           return res.status(500).send({
             message: 'An error occurred'
           })

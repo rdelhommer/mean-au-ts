@@ -4,7 +4,7 @@ import { database } from "data-model/mongoose.config";
 import { config } from "config/config";
 import { IUserModel } from "data-model/user/user.model";
 import { MongoError } from "mongodb";
-import { AuthDto, ensureDecoratorsOn } from "mean-au-ts-shared";
+import { AuthDto, Validation } from "mean-au-ts-shared";
 import { IRequestHandler, IAuthenticatedRequest } from "application/request-handler";
 import { ValidationRules } from "aurelia-validation";
 import { aureliaValidator } from "lib/validator.lib";
@@ -15,8 +15,8 @@ class SignUpHandler implements IRequestHandler<AuthDto.SignUpDto, IUserModel> {
       return Promise.reject(new HandlerError(422, 'Sign up has been temporarily disabled'));
 
     return aureliaValidator.validateObject(
-      req.body, 
-      ensureDecoratorsOn(req.body, ValidationRules)
+      req.body,
+      Validation.ensureDecoratorsOn(req.body, ValidationRules)
     ).then(result => req);
   }
 

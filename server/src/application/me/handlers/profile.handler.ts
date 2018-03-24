@@ -5,14 +5,15 @@ import { HandlerError } from "api/handler.error";
 import { UserDto } from "mean-au-ts-shared";
 import { IRequestHandler, IAuthenticatedRequest } from "application/request-handler";
 
-class ProfileHandler implements IRequestHandler<any, IUser> {
-  validate(req: IAuthenticatedRequest<any>): Promise<IAuthenticatedRequest<any>> {
+class ProfileHandler implements IRequestHandler<void, IUser> {
+  validate(req: IAuthenticatedRequest<void>): Promise<IAuthenticatedRequest<void>> {
     if (req.user.isAnonymous())
       return Promise.reject(new HandlerError(401, 'You must be logged in to access this.'));
 
     return Promise.resolve(req);
   }
-  execute(req: IAuthenticatedRequest<any>): Promise<IUser> {
+
+  execute(req: IAuthenticatedRequest<void>): Promise<IUser> {
     return Promise.resolve(req.user);
   }
 }

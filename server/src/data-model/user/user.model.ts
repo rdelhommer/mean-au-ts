@@ -25,5 +25,5 @@ export interface IUserModel extends IUser, IUserExt, mongoose.Document {
   updated: Date
   created: Date
   resetPasswordToken?: string
-  resetPasswordExpires?: string
+  resetPasswordExpires?: Date
 }

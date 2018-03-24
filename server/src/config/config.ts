@@ -1,20 +1,22 @@
 import { ConnectionOptions } from 'mongoose';
 import * as NodeGeocoder from 'node-geocoder'
 import * as winston from 'winston';
-import * as owaspPassword from 'owasp-password-strength-test';
 import { DefaultConfig } from 'config/default';
 import { ProductionConfig } from 'config/production';
+import { SharedConfig } from 'mean-au-ts-shared';
 
 export namespace Interfaces {
+  export interface ISendGrid {
+    from: string
+    apiToken: string
+  }
+
   export interface IAuth {
     isSignupDisabled: boolean
     jwtSecret: string
     jwtLifetime: number
-  }
-
-  export interface IPassword {
-    strongPasswords: boolean
-    owasp: Partial<owaspPassword.TestConfig>
+    domain: string
+    resetPasswordLifetimeHours: number
   }
 
   export interface IUsername {
@@ -49,14 +51,17 @@ export namespace Interfaces {
   }
 
   export interface IConfig {
+    sendGrid: ISendGrid
     auth: IAuth
-    password: IPassword
     username: IUsername
     express: IExpress
     geocoder: IGeocoder
     mongo: IMongo
     generator: Generator
     logger: ILogger
+    shared: {
+      app: SharedConfig.ISharedAppConfig
+    }
   }
 }
 

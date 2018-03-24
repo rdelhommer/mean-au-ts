@@ -1,51 +1,53 @@
 import { Interfaces } from "config/config";
+import { SharedConfig } from "mean-au-ts-shared";
 
 export class DefaultConfig implements Interfaces.IConfig {
+  sendGrid: Interfaces.ISendGrid
   auth: Interfaces.IAuth;
-  password: Interfaces.IPassword
   username: Interfaces.IUsername
   express: Interfaces.IExpress
   geocoder: Interfaces.IGeocoder
   mongo: Interfaces.IMongo
   generator: Interfaces.Generator
   logger: Interfaces.ILogger
+  shared: {
+    app: SharedConfig.ISharedAppConfig
+  }
 
   constructor() {
-    this.auth = {
-      isSignupDisabled: false,
-      jwtSecret: '<CHANGE-THIS-TO-SOMETHING-SECRET>',
-      // jwt expires after 30 minutes
-      jwtLifetime: 30 * 60
-    }
-
-    this.password = {
-      strongPasswords: true,
-      owasp: {
-        allowPassphrases: false,
-        minLength: 8,
-        minOptionalTestsToPass: 0
-      }
-    }
-
-    this.username = {
-      illegalUsernames: [
-        'food2soil', 
-        'administrator', 
-        'password', 
-        'admin', 
-        'user',
-        'unknown', 
-        'anonymous', 
-        'null', 
-        'undefined', 
-        'api'
-      ]
+    this.sendGrid = {
+      apiToken: process.env.SENDGRID_API_KEY,
+      from: 'beep-boop@mean-au-ts.net'
     }
 
     this.express = {
       host: 'localhost',
       port: 3030,
       public: '../public/'
+    }
+
+    this.auth = {
+      isSignupDisabled: false,
+      jwtSecret: '<CHANGE-THIS-TO-SOMETHING-SECRET>',
+      // jwt expires after 30 minutes
+      jwtLifetime: 30 * 60,
+      domain: `http://${this.express.host}:${this.express.port}`,
+      resetPasswordLifetimeHours: 24
+    }
+
+    this.username = {
+      illegalUsernames: [
+        'food2soil',
+        'administrator',
+        'password',
+        'admin',
+        'user',
+        'unknown',
+        'anonymous',
+        'null',
+        'undefined',
+        'api'
+      ]
     }
 
     this.mongo = {
@@ -63,7 +65,7 @@ export class DefaultConfig implements Interfaces.IConfig {
       gallonsPerBucket: 6.5,
       gallonsPerCart: 12
     }
-  
+
     this.geocoder = {
       provider: 'google',
       httpAdapter: 'https',
@@ -73,6 +75,10 @@ export class DefaultConfig implements Interfaces.IConfig {
 
     this.logger = {
       level: 'build'
+    }
+
+    this.shared = {
+      app: SharedConfig.app
     }
   }
 }

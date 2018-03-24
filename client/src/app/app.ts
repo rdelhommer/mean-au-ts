@@ -52,6 +52,10 @@ export class App {
           return next.cancel(new Redirect('account'))
         }
 
+        if (this.auth.isAuthenticated && instruction.fragment.indexOf('/account/reset-forgot') !== -1) {
+          return next.cancel(new Redirect('home'))
+        }
+
         return next();
       }
     })

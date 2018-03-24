@@ -9,21 +9,35 @@ export class AuthApi {
     return 'api/auth/';
   }
 
-  constructor(private http: IHttp) { }
+  constructor(
+    private http: IHttp
+  ) { }
 
   signin(credentials: AuthDto.SignInDto): Promise<UserDto.UserPublicDto> {
-    return this.http.post(`${this.baseUrl}signin`, credentials).then(response => {
-      return Utilities.castTo<UserDto.UserPublicDto>(response.data, UserDto.UserPublicDto);
+    return this.http.post(`${this.baseUrl}signin`, credentials).then(responseBody => {
+      return Utilities.castTo<UserDto.UserPublicDto>(responseBody.data, UserDto.UserPublicDto);
     });
   }
 
   signup(newUser: AuthDto.SignUpDto): Promise<UserDto.UserPublicDto> {
-    return this.http.post(`${this.baseUrl}signup`, newUser).then(response => {
-      return Utilities.castTo<UserDto.UserPublicDto>(response.data, UserDto.UserPublicDto);
+    return this.http.post(`${this.baseUrl}signup`, newUser).then(responseBody => {
+      return Utilities.castTo<UserDto.UserPublicDto>(responseBody.data, UserDto.UserPublicDto);
     });
   }
   
-  signout(): Promise<any> {
-    return this.http.post(`${this.baseUrl}signout`);
+  signout(): Promise<void> {
+    return this.http.post(`${this.baseUrl}signout`).then(responseBody => undefined);
+  }
+
+  sendForgotPassword(body: AuthDto.SendForgotPasswordDto): Promise<void> {
+    return this.http.post(`${this.baseUrl}send-forgot-password`, body).then(responseBody => undefined);
+  }
+
+  testForgotPassword(params: AuthDto.TestForgotPasswordDto): Promise<void> {
+    return this.http.get(`${this.baseUrl}forgot-password`, params, false).then(responseBody => undefined);
+  }
+
+  resetForgottenPassword(body: AuthDto.ForgotPasswordDto): Promise<void> {
+    return this.http.post(`${this.baseUrl}forgot-password`, body).then(responseBody => undefined);
   }
 }

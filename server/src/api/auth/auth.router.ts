@@ -6,18 +6,19 @@ import { signOutHandler } from "application/auth/handlers/signout.handler";
 import { Enums, UserDto, AuthDto } from "mean-au-ts-shared";
 import { ModuleExecutor } from "../module.executor";
 import { Router } from "express";
+import { forgotPasswordHandler } from "application/auth/handlers/forgot-password.handler";
+import { sendForgotPasswordHandler } from "application/auth/handlers/send-forgot-password.handler";
+import { testForgotPasswordHandler } from "application/auth/handlers/test-forgot-password.handler";
 
 const executor = new ModuleExecutor();
 const router = Router();
 
-router.post('/signup',
-  executor.execute<AuthDto.SignUpDto, IUser>(signUpHandler, AuthDto.SignUpDto))
-
-router.post('/signin',
-  executor.execute<AuthDto.SignInDto, IUser>(signInHandler, AuthDto.SignInDto))
-
-router.post('/signout',
-  executor.execute(signOutHandler, null))
+router.post('/signup', executor.execute(signUpHandler, AuthDto.SignUpDto))
+  .post('/signin', executor.execute(signInHandler, AuthDto.SignInDto))
+  .post('/signout', executor.execute(signOutHandler, null))
+  .post('/send-forgot-password', executor.execute(sendForgotPasswordHandler, null))
+  .get('/forgot-password', executor.execute(testForgotPasswordHandler, null))
+  .post('/forgot-password', executor.execute(forgotPasswordHandler, null))
 
 executor.responseBuilder = new DefaultResponseBuilder(
   new Map<Enums.UserRoles, Function>([

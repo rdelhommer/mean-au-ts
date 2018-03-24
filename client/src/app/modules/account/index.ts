@@ -41,6 +41,14 @@ export class AccountIndex {
       settings: {
         allowedRoles: [Enums.UserRoles.Anonymous]
       }
+    }, {
+      route: 'reset-forgot/:id',
+      name: 'reset-forgot',
+      moduleId: PLATFORM.moduleName('./reset-forgot-password'),
+      title: 'Reset Password',
+      settings: {
+        allowedRoles: [Enums.UserRoles.Anonymous]
+      }
     }]);
 
     this.router = router;

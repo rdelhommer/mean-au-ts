@@ -3,6 +3,7 @@ import { Request } from 'express';
 
 export interface ITypedRequest<TBody> extends Request {
   body: TBody
+  query: TBody
 }
 
 export interface IAuthenticatedRequest<TBody> extends ITypedRequest<TBody> {

@@ -12,15 +12,15 @@ import { updateProfileHandler } from "application/me/handlers/update-profile.han
 const executor = new ModuleExecutor();
 const router = Router();
 
-router.get('/', executor.execute<void, IUser>(profileHandler, null))
+router.get('/', executor.execute(profileHandler, null))
 
 router.put('/',
     acl.restrictToRoles(Enums.UserRoles.Technician, Enums.UserRoles.Admin),
-    executor.execute<MeDto.ProfileDto, void>(updateProfileHandler, null))
+    executor.execute(updateProfileHandler, null))
 
 router.post('/change-password',
     acl.restrictToRoles(Enums.UserRoles.Technician, Enums.UserRoles.Admin),
-    executor.execute<MeDto.ChangePasswordDto, void>(changePasswordHandler, MeDto.ChangePasswordDto))
+    executor.execute(changePasswordHandler, MeDto.ChangePasswordDto))
 
 executor.responseBuilder = new DefaultResponseBuilder(
   new Map<Enums.UserRoles, Function>([

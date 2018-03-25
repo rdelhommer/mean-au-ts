@@ -5,10 +5,8 @@ import { aureliaValidator } from "lib/validator.lib";
 
 class UpdateProfileHandler implements IRequestHandler<MeDto.ProfileDto, void> {
   validate(req: IAuthenticatedRequest<MeDto.ProfileDto>): Promise<IAuthenticatedRequest<MeDto.ProfileDto>> {
-    return aureliaValidator.validateObject(
-      req.body,
-      Validation.ensureDecoratorsOn(req.body, ValidationRules)
-    ).then(result => req);
+    Validation.ensureDecoratorsOn(MeDto.ProfileDto, ValidationRules)
+    return aureliaValidator.validateObject(req.body).then(result => req);
   }
 
   execute(req: IAuthenticatedRequest<MeDto.ProfileDto>): Promise<void> {

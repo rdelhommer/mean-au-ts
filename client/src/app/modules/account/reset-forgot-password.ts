@@ -19,7 +19,7 @@ export class ResetForgotPassword implements RoutableComponentActivate {
     private validator: IValidator,
     private router: Router
   ) {
-    Validation.ensureDecoratorsOn(this.changePasswordDetails, ValidationRules);
+    Validation.ensureDecoratorsOn(AuthDto.ForgotPasswordDto, ValidationRules);
   }
 
   resetPassword() {

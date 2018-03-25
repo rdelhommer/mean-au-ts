@@ -7,10 +7,8 @@ import { database } from "data-model/mongoose.config";
 
 class ForgotPasswordHandler implements IRequestHandler<AuthDto.ForgotPasswordDto, void> {
   validate(req: IAuthenticatedRequest<AuthDto.ForgotPasswordDto>): Promise<IAuthenticatedRequest<AuthDto.ForgotPasswordDto>> {
-    return aureliaValidator.validateObject(
-      req.body,
-      Validation.ensureDecoratorsOn(req.body, ValidationRules)
-    ).then(result => {
+    Validation.ensureDecoratorsOn(AuthDto.ForgotPasswordDto, ValidationRules)
+    return aureliaValidator.validateObject(req.body).then(result => {
       return database.User.findOne({ resetPasswordToken: req.body.forgotPasswordToken }).then(user => {
         if (!user) throw new HandlerError(422, 'Invalid reset password token');
 

@@ -11,10 +11,8 @@ import { ValidationRules, ValidationController } from "aurelia-validation";
 
 class SignInHandler implements IRequestHandler<AuthDto.SignInDto, IUserModel> {
   validate(req: IAuthenticatedRequest<AuthDto.SignInDto>): Promise<IAuthenticatedRequest<AuthDto.SignInDto>> {
-    return aureliaValidator.validateObject(
-      req.body,
-      Validation.ensureDecoratorsOn(req.body, ValidationRules)
-    ).then(result => req);
+    Validation.ensureDecoratorsOn(AuthDto.SignInDto, ValidationRules)
+    return aureliaValidator.validateObject(req.body).then(result => req);
   }
 
   execute(req: IAuthenticatedRequest<AuthDto.SignInDto>): Promise<IUserModel> {

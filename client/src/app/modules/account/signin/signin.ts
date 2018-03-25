@@ -22,7 +22,7 @@ export class SignInMain implements RoutableComponentCanActivate, ComponentDetach
     private auth: IAuth,
     private validator: IValidator
   ) { 
-    Validation.ensureDecoratorsOn(this.requestBody, ValidationRules);
+    Validation.ensureDecoratorsOn(AuthDto.SignInDto, ValidationRules);
   }
 
   signIn() {

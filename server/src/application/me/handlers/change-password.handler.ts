@@ -16,10 +16,8 @@ class ChangePasswordHandler implements IRequestHandler<MeDto.ChangePasswordDto, 
       })
       .withMessage('Your current password is not correct');
 
-    return aureliaValidator.validateObject(
-      req.body,
-      Validation.ensureDecoratorsOn(req.body, rules)
-    ).then(result => req);
+    Validation.ensureDecoratorsOn(MeDto.ChangePasswordDto, rules)
+    return aureliaValidator.validateObject(req.body).then(result => req);
   }
 
   execute(req: IAuthenticatedRequest<MeDto.ChangePasswordDto>): Promise<void> {

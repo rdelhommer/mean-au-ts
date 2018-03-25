@@ -9,17 +9,14 @@ export class AureliaValidator implements IValidator {
     private validator: Validator
   ) { }
 
-  validateObject(obj: object): Promise<ControllerValidateResult> {
+  validateObject(obj: object): Promise<ValidateResult[]> {
     return this.validator.validateObject(obj).then(results => {
       let errorResults = Validation.getErrorResults(results);
       let isValid = errorResults.length === 0;
       
       if (!isValid) throw new ValidationError(errorResults)
 
-      return {
-        valid: Validation.getErrorResults(results).length === 0,
-        results: results
-      }
+      return results;
     })
   }
 }

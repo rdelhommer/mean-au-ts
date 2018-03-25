@@ -17,7 +17,7 @@ export class SendForgotPassword {
     private authApi: AuthApi,
     private router: Router
   ) {
-    Validation.ensureDecoratorsOn(this.requestBody, ValidationRules);
+    Validation.ensureDecoratorsOn(AuthDto.SendForgotPasswordDto, ValidationRules);
    }
   
   sendForgotPasswordEmail() {

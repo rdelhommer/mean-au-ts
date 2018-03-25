@@ -20,8 +20,8 @@ export class AccountProfile implements RoutableComponentActivate {
     private meApi: MeApi,
     private validator: IValidator
   ) {
-    Validation.ensureDecoratorsOn(this.generalInformation, ValidationRules);
-    Validation.ensureDecoratorsOn(this.changePasswordDetails, ValidationRules);
+    Validation.ensureDecoratorsOn(MeDto.ProfileDto, ValidationRules);
+    Validation.ensureDecoratorsOn(MeDto.ChangePasswordDto, ValidationRules);
   }
 
   changePassword() {

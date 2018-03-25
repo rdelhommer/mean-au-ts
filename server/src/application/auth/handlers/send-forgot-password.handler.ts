@@ -10,10 +10,8 @@ import { newGuid } from "lib/guid.lib";
 
 class SendForgotPasswordHandler implements IRequestHandler<AuthDto.SendForgotPasswordDto, void> {
   validate(req: IAuthenticatedRequest<AuthDto.SendForgotPasswordDto>): Promise<IAuthenticatedRequest<AuthDto.SendForgotPasswordDto>> {
-    return aureliaValidator.validateObject(
-      req.body,
-      Validation.ensureDecoratorsOn(req.body, ValidationRules)
-    ).then(result => {
+    Validation.ensureDecoratorsOn(AuthDto.SendForgotPasswordDto, ValidationRules)
+    return aureliaValidator.validateObject(req.body).then(result => {
       return database.User.findOne({ email: req.body.email }).then(user => {
         if (!user) throw new HandlerError(422, `The email you provided does not exist in our system`);
 

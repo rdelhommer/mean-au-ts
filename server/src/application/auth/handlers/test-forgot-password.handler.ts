@@ -7,10 +7,8 @@ import { database } from "data-model/mongoose.config";
 
 class TestForgotPasswordHandler implements IRequestHandler<AuthDto.TestForgotPasswordDto, void> {
   validate(req: IAuthenticatedRequest<AuthDto.TestForgotPasswordDto>): Promise<IAuthenticatedRequest<AuthDto.TestForgotPasswordDto>> {
-    return aureliaValidator.validateObject(
-      req.body,
-      Validation.ensureDecoratorsOn(req.query, ValidationRules)
-    ).then(result => req);
+    Validation.ensureDecoratorsOn(AuthDto.TestForgotPasswordDto, ValidationRules)
+    return aureliaValidator.validateObject(req.query).then(result => req);
   }
 
   execute(req: IAuthenticatedRequest<AuthDto.TestForgotPasswordDto>): Promise<void> {

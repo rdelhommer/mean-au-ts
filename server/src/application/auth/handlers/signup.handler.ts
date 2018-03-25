@@ -14,10 +14,8 @@ class SignUpHandler implements IRequestHandler<AuthDto.SignUpDto, IUserModel> {
     if (config.auth.isSignupDisabled)
       return Promise.reject(new HandlerError(422, 'Sign up has been temporarily disabled'));
 
-    return aureliaValidator.validateObject(
-      req.body,
-      Validation.ensureDecoratorsOn(req.body, ValidationRules)
-    ).then(result => req);
+    Validation.ensureDecoratorsOn(AuthDto.SignUpDto, ValidationRules)
+    return aureliaValidator.validateObject(req.body).then(result => req);
   }
 
   execute(req: IAuthenticatedRequest<AuthDto.SignUpDto>): Promise<IUserModel> {

@@ -5,7 +5,7 @@ import { GeneralDto } from "mean-au-ts-shared";
 import { IAuthenticatedRequest } from "application/request-handler";
 
 export class TokenResponseBuilderStep implements IResponseBuilderStep {
-  pipe(response: GeneralDto.SuccessResponseBody, req: IAuthenticatedRequest<void>): GeneralDto.SuccessResponseBody {
+  pipe(response: GeneralDto.SuccessResponseBody, req: IAuthenticatedRequest<any>): GeneralDto.SuccessResponseBody {
     if (!req.user || req.user.isAnonymous()) {
       return response;
     }

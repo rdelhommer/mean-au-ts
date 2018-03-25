@@ -4,7 +4,7 @@ import { GeneralDto, Enums } from 'mean-au-ts-shared';
 import { IAuthenticatedRequest } from 'application/request-handler';
 
 export interface IResponseBuilder {
-  buildResponse(req: IAuthenticatedRequest, data: any): GeneralDto.SuccessResponseBody;
+  buildResponse(req: IAuthenticatedRequest<any>, data: any): GeneralDto.SuccessResponseBody;
 }
 
 export class ResponseBuilder implements IResponseBuilder {
@@ -12,7 +12,7 @@ export class ResponseBuilder implements IResponseBuilder {
 
   }
 
-  buildResponse(req: IAuthenticatedRequest, data: any): GeneralDto.SuccessResponseBody {
+  buildResponse(req: IAuthenticatedRequest<any>, data: any): GeneralDto.SuccessResponseBody {
     let response: GeneralDto.SuccessResponseBody = {
       handledAs: Enums.UserRoles.Anonymous,
       data: data

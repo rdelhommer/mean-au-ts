@@ -16,11 +16,11 @@ export class ModuleExecutor {
       try {
         if (ExpectedBody) {
           // transform the request body into the expected type.
-          // this discards any extra properties that are not desired.
+          // this discards any properties that are not on the expected type.
           req.body = Utilities.castTo<TRequestBody>(req.body, ExpectedBody);
         }
 
-        // handle the request
+        // validate and handle the request
         handler.validate(req)
           .then(handler.execute)
           .then(responseData => {
@@ -28,10 +28,12 @@ export class ModuleExecutor {
               return res.json(responseData);
             }
 
+            // Build the response
             return res.json(this.responseBuilder.buildResponse(req, responseData));
           }).catch((err: HandlerError) => {
             let body: GeneralDto.ErrorResponseBody;
             if (err.constructor === HandlerError) {
+              // Special handling for our custom error type
               body = {
                 message: err.message
               }
@@ -39,6 +41,7 @@ export class ModuleExecutor {
               return res.status(err.httpCode || 500).send(body);
             }
 
+            // Log and send 500 if the error was unexpected
             logger.error(err.message)
             logger.error(err.stack)
 
@@ -49,6 +52,7 @@ export class ModuleExecutor {
             return res.status(500).send(body)
           })
       } catch (err) {
+          // Log and send 500 if the error was unexpected
           logger.error(err.message)
           logger.error(err.stack)
 

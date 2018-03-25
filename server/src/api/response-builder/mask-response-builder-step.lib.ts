@@ -9,7 +9,7 @@ export class MaskResponseBuilderStep implements IResponseBuilderStep {
 
   }
 
-  pipe(response: GeneralDto.SuccessResponseBody, req: IAuthenticatedRequest): GeneralDto.SuccessResponseBody {
+  pipe(response: GeneralDto.SuccessResponseBody, req: IAuthenticatedRequest<any>): GeneralDto.SuccessResponseBody {
     if (response.data == null) return response;
 
     let AdminMask = this.viewModelMap.get(Enums.UserRoles.Admin);

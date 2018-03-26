@@ -27,6 +27,7 @@ export class SignInMain implements RoutableComponentCanActivate, ComponentDetach
 
   signIn() {
     this.validator.validateObject(this.requestBody).then(() => {
+      this.auth.signOut()
       this.authApi.signin(this.requestBody).then(data => {
         this.router.navigateToRoute('home');
         toastr.success(`Welcome, ${data.firstName} ${data.lastName}`);

@@ -16,7 +16,7 @@ export class ResponseErrorInterceptor {
     if (response.status !== 401) return response;
 
     if (this.auth.isAuthenticated) {
-      this.auth.clearAuth();
+      this.auth.signOut();
     }
 
     this.router.navigate('/account/signin');

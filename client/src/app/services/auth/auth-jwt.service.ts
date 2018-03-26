@@ -34,13 +34,12 @@ export class JwtAuth implements IAuth {
     return request;
   }
 
-  clearAuth(): void {
-    this.cache.delete(ICache.Mode.Global, this.env.localStorage.authKey);
-    this.cache.delete(ICache.Mode.Global, this.env.localStorage.userKey);
+  signOut(): void {
+    this.cache.clear();
     this.authAlteredFlag = !this.authAlteredFlag;
   }
 
-  storeAuth(response: Response): Response {
+  signIn(response: Response): Response {
     response.clone().json().then((body: GeneralDto.SuccessResponseBody) => {
       this.cache.set(ICache.Mode.Global, this.env.localStorage.authKey, body.token);
       this.cache.set(ICache.Mode.Global, this.env.localStorage.userKey, body.data);

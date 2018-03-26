@@ -11,12 +11,12 @@ export class ResponseInterceptor {
     private auth: IAuth
   ) { }
 
-  private storeAuth(response: Response): Response {
-    return this.auth.storeAuth(response);
+  private signIn(response: Response): Response {
+    return this.auth.signIn(response);
   }
 
   run(response: Response): Response {
-    response = this.storeAuth(response);
+    response = this.signIn(response);
 
     return response;
   }

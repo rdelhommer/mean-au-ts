@@ -17,7 +17,7 @@ export class App {
 
   signOut() {
     this.authApi.signout().then(response => {
-      this.auth.clearAuth();
+      this.auth.signOut();
       this.router.navigateToRoute('home');
     })
   }
@@ -34,29 +34,6 @@ export class App {
           toastr.error('You do not have permission to access that page.')
           return next.cancel();
         }
-      }
-    })
-
-
-    config.addAuthorizeStep({
-      run: (instruction: NavigationInstruction, next: Next): Promise<any> => {
-        if (!this.auth.isAuthenticated && (instruction.fragment === '/account' || instruction.fragment === '/account/profile')) {
-          return next.cancel(new Redirect('account/signin'))
-        }
-
-        if (this.auth.isAuthenticated && instruction.fragment === '/account/signin') {
-          return next.cancel(new Redirect('account'))
-        }
-
-        if (this.auth.isAuthenticated && instruction.fragment === '/account/signup') {
-          return next.cancel(new Redirect('account'))
-        }
-
-        if (this.auth.isAuthenticated && instruction.fragment.indexOf('/account/reset-forgot') !== -1) {
-          return next.cancel(new Redirect('home'))
-        }
-
-        return next();
       }
     })
 

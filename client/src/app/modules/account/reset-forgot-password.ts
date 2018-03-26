@@ -1,4 +1,4 @@
-import { RoutableComponentActivate, Router } from "aurelia-router";
+import { RoutableComponentActivate, Router, NavigationCommand } from "aurelia-router";
 import { autoinject } from "aurelia-framework";
 import { UserDto, MeDto, Validation, AuthDto } from "mean-au-ts-shared";
 import { FormWrap } from "app/resources/elements/form-wrap/form-wrap";
@@ -6,6 +6,7 @@ import { ValidationController, ValidationRules, Validator } from "aurelia-valida
 import { IValidator, ValidationError } from "app/services/validator/validator.service";
 import * as toastr from 'toastr';
 import { AuthApi } from "app/apis/auth.api";
+import { IAuth } from "app/services/auth/auth.service";
  
 @autoinject
 export class ResetForgotPassword implements RoutableComponentActivate {
@@ -17,7 +18,8 @@ export class ResetForgotPassword implements RoutableComponentActivate {
   constructor(
     private authApi: AuthApi,
     private validator: IValidator,
-    private router: Router
+    private router: Router,
+    private auth: IAuth
   ) {
     Validation.ensureDecoratorsOn(AuthDto.ForgotPasswordDto, ValidationRules);
   }
@@ -32,6 +34,16 @@ export class ResetForgotPassword implements RoutableComponentActivate {
     }).catch((error: ValidationError) => {
       toastr.error(error.errors[0].message);
     })
+  }
+
+  canActivate(): NavigationCommand {
+    if (!this.auth.isAuthenticated) return;
+
+    return {
+      navigate: (router: Router) => {
+        router.navigateToRoute('home')
+      }
+    }
   }
 
   activate(params: { id: string }) {

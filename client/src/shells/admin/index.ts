@@ -24,7 +24,6 @@ export class App {
     config.title = 'Aurelia';
     config.options.pushState = true;
 
-    console.log('admin configure');
     config.map([
       {
         route: [''],

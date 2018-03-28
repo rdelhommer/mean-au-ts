@@ -1,0 +1,22 @@
+<template>
+  <require from="./index.less"></require>
+  
+  <side-nav>
+    <div slot="nav-items">
+      <side-nav-item title="Home" icon="fa-home" href="/">
+      </side-nav-item>
+      <side-nav-item title="Profile" icon="fa-user" href="/account">
+        <div slot="badge">
+          <span class="badge badge-success">
+            <i class="fa fa-fw fa-lock"></i>
+          </span>  
+        </div>
+      </side-nav-item>
+    </div>
+  </side-nav>
+  <div class="page-host">
+    <div class="container-fluid">
+        <router-view></router-view>
+    </div>
+  </div>
+</template>

@@ -38,5 +38,5 @@ export function configure(aurelia: Aurelia) {
 
   configureRootContainer(aurelia.container);
 
-  aurelia.start().then(() => aurelia.setRoot(PLATFORM.moduleName('app/app')));
+  aurelia.start().then(() => aurelia.setRoot(PLATFORM.moduleName('shells/anonymous/index')));
 }

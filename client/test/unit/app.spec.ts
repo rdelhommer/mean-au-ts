@@ -1,4 +1,4 @@
-import {App} from '../../src/app/app';
+import {App} from '../../src/shells/anonymous/index';
 
 // describe('the app', () => {
 //   it('says hello', () => {

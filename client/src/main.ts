@@ -4,13 +4,15 @@ import 'font-awesome/css/font-awesome.css';
 import 'bootstrap/dist/css/bootstrap.css';
 import 'toastr/build/toastr.css';
 
-import {Aurelia} from 'aurelia-framework'
+import {Aurelia, Container} from 'aurelia-framework'
 import environment from './environment';
 import {PLATFORM} from 'aurelia-pal';
 import * as Bluebird from 'bluebird';
 import { configureRootContainer } from 'config/container.config';
 import { globalResources } from 'config/resource.config';
 import 'bootstrap';
+import { Router } from 'aurelia-router';
+import { IAuth } from 'shared/services/auth/auth.service';
 
 // remove out if you don't want a Promise polyfill (remove also from webpack.config.js)
 Bluebird.config({ warnings: { wForgottenReturn: false } });
@@ -38,5 +40,12 @@ export function configure(aurelia: Aurelia) {
 
   configureRootContainer(aurelia.container);
 
-  aurelia.start().then(() => aurelia.setRoot(PLATFORM.moduleName('app/app')));
+  aurelia.start().then(() => {
+    let auth: IAuth = Container.instance.get(IAuth);
+    if (auth.currentUser) {
+      aurelia.setRoot(PLATFORM.moduleName('shells/admin/index'));
+    } else {
+      aurelia.setRoot(PLATFORM.moduleName('shells/anonymous/index'));
+    }
+  });
 }

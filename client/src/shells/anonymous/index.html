@@ -1,0 +1,25 @@
+<template>
+  <require from="./index.less"></require>
+  
+  <side-nav>
+    <div slot="nav-items">
+      <side-nav-item title="Home" icon="fa-home" href="/">
+      </side-nav-item>
+      <side-nav-item title="Sign In" icon="fa-user" href="/signin">
+        <div slot="badge">
+          <span class="badge badge-danger">
+            <i class="fa fa-fw fa-unlock"></i>
+          </span>  
+        </div>
+        <div slot="nav-sub-items">
+          <side-nav-sub-item title="Sign Up" href="/signup"></side-nav-sub-item>
+        </div>
+      </side-nav-item>
+    </div>
+  </side-nav>
+  <div class="page-host">
+    <div class="container-fluid">
+        <router-view></router-view>
+    </div>
+  </div>
+</template>

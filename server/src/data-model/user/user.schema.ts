@@ -34,8 +34,7 @@ let UserSchema = new Schema({
     required: true
   },
   phone: {
-    type: String,
-    required: 'Please provide a phone number that you can be contacted at'
+    type: String
   },
   password: {
     type: String,

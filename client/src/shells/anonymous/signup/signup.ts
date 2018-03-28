@@ -1,10 +1,13 @@
 import { autoinject } from "aurelia-framework";
 import { Router, NavigationCommand } from "aurelia-router";
-import { AuthDto } from "mean-au-ts-shared";
+import { AuthDto, Validation } from "mean-au-ts-shared";
 import { FormWrap } from "resources/elements/form-wrap/form-wrap";
 import { AuthApi } from "shared/apis/auth.api";
 import { IAuth } from "shared/services/auth/auth.service";
 import { ComponentDetached } from "aurelia-templating";
+import { ValidationRules } from "aurelia-validation";
+import { IValidator } from "shared/services/validator/validator.service";
+import * as toastr from 'toastr';
 
 @autoinject
 export class SignUp implements ComponentDetached {
@@ -14,16 +17,18 @@ export class SignUp implements ComponentDetached {
 
   constructor(
     private authApi: AuthApi,
-    private router: Router,
-    private auth: IAuth
-  ) { }
+    private validator: IValidator
+  ) { 
+    Validation.ensureDecoratorsOn(AuthDto.SignUpDto, ValidationRules);
+  }
 
   signUp() {
-    // TODO: add validation
-    this.auth.signOut()
-    this.authApi.signup(this.signUpBody).then(response => {
-      this.router.navigateToRoute('home');
-      // TODO: Toast and redirect to home
+    this.validator.validateObject(this.signUpBody).then(() => {
+      this.authApi.signup(this.signUpBody).then(data => {
+        toastr.success(`Welcome, ${data.firstName} ${data.lastName}`);
+      })
+    }).catch(error => {
+      return toastr.error(error.errors[0].message);
     })
   }
 

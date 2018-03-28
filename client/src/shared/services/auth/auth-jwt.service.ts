@@ -1,7 +1,7 @@
 import { IEnv } from "config/env.config";
 import { autoinject, computedFrom, Aurelia, PLATFORM } from "aurelia-framework";
 import { GeneralDto, Enums, UserDto } from "mean-au-ts-shared";
-import { NavigationInstruction } from "aurelia-router";
+import { NavigationInstruction, Router } from "aurelia-router";
 import { IAuth } from "shared/services/auth/auth.service";
 import { ICache } from "shared/services/cache/cache.service";
 
@@ -18,7 +18,8 @@ export class JwtAuth implements IAuth {
   constructor(
     private cache: ICache,
     private env: IEnv,
-    private aurelia: Aurelia
+    private aurelia: Aurelia,
+    private router: Router
   ) { }
 
   authorizeRequest(request: Request): Request {
@@ -32,11 +33,13 @@ export class JwtAuth implements IAuth {
 
   signOut(): void {
     this.cache.clear();
+    this.router.navigate('/', { replace: true, trigger: false });
     this.aurelia.setRoot(PLATFORM.moduleName('shells/anonymous/index'));
   }
 
   signIn(user: UserDto.UserPublicDto): void {
     this.cache.set(ICache.Mode.Global, this.env.localStorage.userKey, user);
+    this.router.navigate('/', { replace: true, trigger: false });
     this.aurelia.setRoot(PLATFORM.moduleName('shells/admin/index'));
   }
 

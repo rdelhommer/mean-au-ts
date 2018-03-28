@@ -18,7 +18,6 @@ export class SignInMain implements ComponentDetached {
     private authApi: AuthApi,
     private router: Router,
     private validationController: ValidationController,
-    private auth: IAuth,
     private validator: IValidator
   ) { 
     Validation.ensureDecoratorsOn(AuthDto.SignInDto, ValidationRules);
@@ -26,9 +25,7 @@ export class SignInMain implements ComponentDetached {
 
   signIn() {
     this.validator.validateObject(this.requestBody).then(() => {
-      this.auth.signOut()
       this.authApi.signin(this.requestBody).then(data => {
-        this.router.navigateToRoute('home');
         toastr.success(`Welcome, ${data.firstName} ${data.lastName}`);
       })
     }).catch(error => {

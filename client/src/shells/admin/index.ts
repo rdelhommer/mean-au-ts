@@ -12,21 +12,19 @@ export class App {
 
   constructor(
     private auth: IAuth,
-    private authApi: AuthApi
+    private authApi: AuthApi,
+    private aurelia: Aurelia
   ) { }
 
   signOut() {
-    this.authApi.signout().then(response => {
-      this.auth.signOut();
-      // TODO: SET SHELL TO ANONYMOUS
-      this.router.navigateToRoute('home');
-    })
+    this.authApi.signout()
   }
 
   configureRouter(config: RouterConfiguration, router: Router) {
     config.title = 'Aurelia';
     config.options.pushState = true;
 
+    console.log('admin configure');
     config.map([
       {
         route: [''],
@@ -45,5 +43,11 @@ export class App {
     ]);
 
     this.router = router;
+  }
+
+  activate() {
+    if (this.auth.currentUser) return;
+
+    this.aurelia.setRoot(PLATFORM.moduleName('shells/admin/index'));
   }
 }

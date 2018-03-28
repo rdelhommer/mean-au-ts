@@ -10,6 +10,11 @@ import { AuthApi } from 'shared/apis/auth.api';
 export class App {
   router: Router;
 
+  constructor(
+    private auth: IAuth,
+    private aurelia: Aurelia
+  ) { }
+
   configureRouter(config: RouterConfiguration, router: Router) {
     config.title = 'Aurelia';
     config.options.pushState = true;
@@ -40,5 +45,12 @@ export class App {
     }]);
 
     this.router = router;
+  }
+
+  bind() {
+    if (!this.auth.currentUser) return;
+
+    this.router.navigate('/', { replace: true, trigger: false });
+    this.aurelia.setRoot(PLATFORM.moduleName('shells/admin/index'));
   }
 }
